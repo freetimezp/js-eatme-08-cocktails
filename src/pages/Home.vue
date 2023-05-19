@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import AppLayout from '../components/AppLayout.vue';
+import CocktailThumb from '../components/CocktailThumb.vue';
 import { useRootStore } from '../stores/root';
 import { storeToRefs } from 'pinia';
 
@@ -19,7 +20,7 @@ function getCocktails() {
 <template>
     <AppLayout imgUrl="/src/assets/img/bg-1.jpg">
         <div class="wrapper">
-            <div class="info">
+            <div v-if="!ingredient || !cocktails" class="info">
                 <div class="title">Choose your drink</div>
                 <div class="line"></div>
                 <div class="select-wrapper">
@@ -35,6 +36,13 @@ function getCocktails() {
                     our cocktail generator.
                 </div>
                 <img src="../assets/img/cocktails.png" alt="cocktails" class="img">
+            </div>
+            <div v-else class="info">
+                <div class="title">Cocktails With {{ ingredient }}</div>
+                <div class="line"></div>
+                <div class="cocktails">
+                    <CocktailThumb v-for="(cocktail, i) in cocktails" :key="i" :cocktail="cocktail" />
+                </div>
             </div>
         </div>
     </AppLayout>
@@ -67,4 +75,22 @@ function getCocktails() {
 
 .img 
     margin-top: 60px
+
+.cocktails
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-wrap: wrap
+    gap: 20px
+    margin-top: 60px
+    overflow-y: auto
+    max-height: 400px
+
+    &::-webkit-scrollbar 
+        width: 0.4rem
+    &::-webkit-scrollbar-thumb
+        background-color: #fff 
+        min-height: 40px
+        border-radius: 0.5rem
+
 </style>
