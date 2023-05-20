@@ -42,4 +42,8 @@ const props = defineProps({
 .name
     padding-top: 15px
     letter-spacing: 0.1em
+    width: 100%
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 </style>
